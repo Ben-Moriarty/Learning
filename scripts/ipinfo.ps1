@@ -1,0 +1,1 @@
+Get-NetIPAddress -AddressFamily IPv4 -InterfaceAlias Ethernet | Select-Object -Property IPAddress, PrefixLength

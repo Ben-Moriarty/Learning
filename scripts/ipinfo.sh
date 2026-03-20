@@ -6,7 +6,6 @@ IP=$(cut -d'/' -f1 <<< "$INFO")
 echo $IP
 
 MASK_LENGTH=$(cut -d'/' -f2 <<< "$INFO")
-echo $MASK_LENGTH
 
 #this is terrible, but it's mine :)))
 function getmask() {
@@ -22,12 +21,15 @@ function getmask() {
     done
 
     if (( $REMAINDER > 0 )); then
-        echo great
+        #ok so i have the remaining bits ike 4 that means the highest 4 bits of that last number are reserved so ill convert decimal to binary and & it with 11110000
+        LAST_BLOCK=$(cut -d'.' -f$(($CLEARED_BLOCKS+1)) <<< "$IP")
+        LAST_BLOCK_BIN=$(echo "obase=2; $LAST_BLOCK" | bc)
+        LAST_BLOCK_BIN=$(printf "%08d\n" $LAST_BLOCK_BIN)
+        $((2#))
     else
-        echo "add zero"
+        DECIMAL+="0"
     fi
 
-    echo $DECIMAL
 }
 
 getmask

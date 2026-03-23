@@ -13,7 +13,7 @@ function getmask() {
     REMAINDER=$(($MASK_LENGTH - 8 * $CLEARED_BLOCKS))
 
     declare DECIMAL
-    for ((i = 0; i <= $CLEARED_BLOCKS; i++)); do
+    for ((i = 0; i < $CLEARED_BLOCKS; i++)); do
         BLOCK=$(cut -d'.' -f$(($i+1)) <<< "$IP")
         
         DECIMAL+=$BLOCK
@@ -25,10 +25,13 @@ function getmask() {
         LAST_BLOCK=$(cut -d'.' -f$(($CLEARED_BLOCKS+1)) <<< "$IP")
         LAST_BLOCK_BIN=$(echo "obase=2; $LAST_BLOCK" | bc)
         LAST_BLOCK_BIN=$(printf "%08d\n" $LAST_BLOCK_BIN)
-        $((2#))
+        echo $LAST_BLOCK_BIN
+        LAST_BLOCK_AND=$((2#$LAST_BLOCK_BIN & 2#11110000))
+        DECIMAL+=$LAST_BLOCK_AND
     else
         DECIMAL+="0"
     fi
+    echo "Network Portion: $DECIMAL\\$MASK_LENGTH"
 
 }
 

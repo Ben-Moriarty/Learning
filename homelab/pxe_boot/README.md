@@ -14,3 +14,5 @@ I'm using proxmox and used [this](https://forum.proxmox.com/threads/automated-in
 The only issue is the process from that turotial generated a 1.6G file that took 111 minutes to transfer over tftp.
 
 The first thing I did was allow dnsmasq to auto-resolve tftp blocksize (commenting out 'tftp-no-blocksize') going from 512 bytes to 1410 bytes. Decreasing the transfer time from 1 hour and 40 minutes to just 40 minutes.
+
+Turns out the initrd AND the iso need to be loaded over the network. This is possible with pxelinux, but considering the speed issues already with tftp (and just wanting to use a better tool). I am going to switch to iPXE.

@@ -8,3 +8,9 @@ the dnsmasq service, acting as a DHCP proxy, sends a response with info about th
 the client loads pxelinux.0 over TFTP, which then loads pxelinux.cfg/default
 
 the linux kernel (vmlinuz) and temporary filesystem (initrd) are loaded
+
+I'm using proxmox and used [this](https://forum.proxmox.com/threads/automated-installation-pxe-boot.169009/) tutorial to extract the initrd file from the auto-generated iso.
+
+The only issue is the process from that turotial generated a 1.6G file that took 111 minutes to transfer over tftp.
+
+The first thing I did was allow dnsmasq to auto-resolve tftp blocksize (commenting out 'tftp-no-blocksize') going from 512 bytes to 1410 bytes. Decreasing the transfer time from 1 hour and 40 minutes to just 40 minutes.
